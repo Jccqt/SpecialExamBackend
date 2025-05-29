@@ -4,8 +4,8 @@ require '../../connection.php';
 if(isset($_POST['UserID'])){
     $student_id = $_POST['UserID'];
 
-    $get_applied_courses_query = "SELECT CourseExam.CourseID FROM ApplicationCourseExam CouseExam JOIN Applications Application ON CourseExam.ApplicationID = Application.ApplicationID 
-    WHERE Application.UserID = ?";
+    $get_applied_courses_query = "SELECT CourseExam.CourseID FROM ApplicationCourseExam CourseExam JOIN Applications Application ON CourseExam.ApplicationID = Application.ApplicationID 
+    WHERE Application.UserID = ? AND CourseExam.CourseExamStatus = 1";
 
     $stmt = $conn->prepare($get_applied_courses_query);
     $stmt->bind_param("s", $student_id);
@@ -23,7 +23,8 @@ if(isset($_POST['UserID'])){
         echo json_encode(["Course Alert" => true, 
         "Applied Courses" => $applied_courses]);
     } else {
-        echo json_encode(["Course Alert" => false]);
+        echo json_encode(["Course Alert" => false,
+        "Applied Courses" => []]);
     }
 
     $stmt->close();

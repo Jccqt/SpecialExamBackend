@@ -4,8 +4,10 @@ require '../../connection.php';
 if(isset($_POST['UserID'])){
     $student_id = $_POST['UserID'];
 
-    $get_applied_courses_query = "SELECT CourseExam.CourseID FROM ApplicationCourseExam CourseExam JOIN Applications Application ON CourseExam.ApplicationID = Application.ApplicationID 
-    WHERE Application.UserID = ? AND CourseExam.CourseExamStatus = 1";
+    $get_applied_courses_query = "SELECT CourseExam.CourseID FROM ApplicationCourseExam CourseExam 
+    JOIN Applications Application ON CourseExam.ApplicationID = Application.ApplicationID  
+    JOIN Examinations Exam ON CourseExam.ExamID = Exam.ExamID 
+    WHERE Application.UserID = ? AND CourseExam.CourseExamStatus = 1 AND Exam.ExamStatus = 1";
 
     $stmt = $conn->prepare($get_applied_courses_query);
     $stmt->bind_param("s", $student_id);

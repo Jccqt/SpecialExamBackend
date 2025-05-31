@@ -1,11 +1,14 @@
 <?php
 require '../../connection.php';
 
-if(isset($_POST['UserID']) && isset($_POST['ReasonType']) && isset($_POST['Reason']) && isset($_POST['CourseIDs'])){
+date_default_timezone_set('Asia/Manila');
+
+if(isset($_POST['UserID']) && isset($_POST['ProgramID']) && isset($_POST['ReasonType']) && isset($_POST['Reason']) && isset($_POST['CourseIDs'])){
     $user_id = $_POST['UserID'];
     $reason_type = $_POST['ReasonType'];
     $reason = $_POST['Reason'];
     $course_ids = $_POST['CourseIDs'];
+    $program_id = $_POST['ProgramID'];
     if (!is_array($course_ids)) {
     $course_ids = [$course_ids];
 }
@@ -25,10 +28,10 @@ if(isset($_POST['UserID']) && isset($_POST['ReasonType']) && isset($_POST['Reaso
     $conn->begin_transaction();
 
     try{
-        $insert_application_query = "INSERT INTO Applications(ApplicationID, UserID, ReasonType, Reason, ApplicationDate, ApplicationStatus) VALUES(?, ?, ?, ?, ?, ?)";
+        $insert_application_query = "INSERT INTO Applications(ApplicationID, UserID, ProgramID, ReasonType, Reason, ApplicationDate, ApplicationStatus) VALUES(?, ?, ?, ?, ?, ?, ?)";
     
     $stmt = $conn->prepare($insert_application_query);
-    $stmt->bind_param("sssssi", $submission_count, $user_id, $reason_type, $reason, $current_date, $status);
+    $stmt->bind_param("ssssssi", $submission_count, $user_id, $program_id, $reason_type, $reason, $current_date, $status);
     $stmt->execute();
 
     $insert_courses_query = "INSERT INTO ApplicationCourseExam(ApplicationID, CourseID, ExamID, CourseExamStatus) VALUES (?,?, ?,?)";
@@ -38,7 +41,6 @@ if(isset($_POST['UserID']) && isset($_POST['ReasonType']) && isset($_POST['Reaso
         $course_stmt->bind_param("sssi", $submission_count, $course_id, $current_exam_id, $status);
         $course_stmt->execute();
     }
-
     $conn->commit();
     echo json_encode(["Submission Alert" => true]);
     } catch(Exception $e) {
@@ -46,10 +48,12 @@ if(isset($_POST['UserID']) && isset($_POST['ReasonType']) && isset($_POST['Reaso
         echo json_encode(["Submission Alert" => false,
         "Error Message" => $e->getMessage()]);
     }
-    
-} 
 
-$stmt->close();
-$course_stmt->close();
+    $stmt->close();
+    $course_stmt->close();
+    
+} else {
+    echo json_encode(["Error Message" => "Error"]);
+}
 $conn->close();
 ?>

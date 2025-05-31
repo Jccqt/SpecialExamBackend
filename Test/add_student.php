@@ -1,13 +1,13 @@
 <?php
-require 'connection.php'; //connect to database
+require '../connection.php'; //connect to database
 
 //student details
-$student_id = "297700";
-$first_name = "Jose";
-$last_name = "Calayag";
-$middle_name = "Buensuceso";
-$student_email = "calayag.297700@balagtas.sti.edu.ph";
-$student_pass = password_hash("jcpogi", PASSWORD_DEFAULT);
+$student_id = "02000286986";
+$first_name = "Adrianne";
+$last_name = "Villa";
+$middle_name = "Lapada";
+$student_email = "villa.286986@balagtas.sti.edu.ph";
+$student_pass = password_hash("villa", PASSWORD_DEFAULT);
 $role = "Student";
 $status = 1;
 $logCount = 1;

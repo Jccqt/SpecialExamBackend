@@ -1,11 +1,12 @@
 <?php
 require '../../connection.php';
 
-if(isset($_POST['UserID'])){
-    $studentID = $_POST['UserID'];
+if(isset($_POST['ProgramID'])){
+    $studentID = $_POST['ProgramID'];
 
-    $get_courses_query = "SELECT Course.CourseID, Course.CourseName FROM Courses Course JOIN StudentCourses StudCourses ON Course.CourseID = StudCourses.CourseID 
-    WHERE StudCourses.UserID = ? AND StudCourses.Status = 1";
+    $get_courses_query = "SELECT Course.CourseName, Program.CourseID FROM ProgramCourses Program 
+    JOIN Courses Course ON Program.CourseID = Course.CourseID 
+    WHERE Program.ProgramID = ?";
 
     $stmt = $conn->prepare($get_courses_query);
     $stmt->bind_param("s", $studentID);

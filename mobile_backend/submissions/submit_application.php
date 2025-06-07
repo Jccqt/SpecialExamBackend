@@ -42,7 +42,8 @@ if(isset($_POST['UserID']) && isset($_POST['ProgramID']) && isset($_POST['Reason
         $course_stmt->execute();
     }
     $conn->commit();
-    echo json_encode(["Submission Alert" => true]);
+    echo json_encode(["Submission Alert" => true,
+                    "ApplicationID" => $submission_count]);
     } catch(Exception $e) {
         $conn->rollback();
         echo json_encode(["Submission Alert" => false,

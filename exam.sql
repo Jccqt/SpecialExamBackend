@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2025 at 05:10 AM
+-- Generation Time: Jun 07, 2025 at 03:16 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,16 +36,17 @@ CREATE TABLE `applicationcourseexam` (
   `CourseExamStatus` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `applicationcourseexam`
+-- Table structure for table `applicationimages`
 --
 
-INSERT INTO `applicationcourseexam` (`ApplicationID`, `CourseID`, `ExamID`, `Room`, `ExamDate`, `CourseExamStatus`) VALUES
-('APPLICATION1', 'GE1904', 'EXAM1', '', '2025-06-02', 2),
-('APPLICATION1', 'IT1918', 'EXAM1', '', '2025-06-02', 2),
-('APPLICATION2', 'GE1904', 'EXAM1', '', '2025-06-02', 2),
-('APPLICATION2', 'IT1918', 'EXAM1', '', '2025-06-02', 2),
-('APPLICATION3', 'IT2034', 'EXAM1', '', NULL, 1);
+CREATE TABLE `applicationimages` (
+  `ImageID` int(11) NOT NULL,
+  `ApplicationID` varchar(50) NOT NULL,
+  `ImageName` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -64,15 +65,6 @@ CREATE TABLE `applications` (
   `VerdictDate` datetime DEFAULT NULL,
   `ApplicationStatus` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `applications`
---
-
-INSERT INTO `applications` (`ApplicationID`, `UserID`, `ProgramID`, `ReasonType`, `Reason`, `PaymentType`, `ApplicationDate`, `VerdictDate`, `ApplicationStatus`) VALUES
-('APPLICATION1', '02000286986', 'BSIT3A', 'Medical', 'Abdominal Pain', 'excuse', '2025-05-31 10:57:00', '2025-05-31 10:58:00', 2),
-('APPLICATION2', '02000286986', 'BSIT3A', 'Medical', 'Toothache ', 'payment', '2025-05-31 10:59:00', '2025-05-31 10:59:00', 2),
-('APPLICATION3', '02000286986', 'BSIT3A', 'Medical', 'Toothache ', 'payment', '2025-05-31 10:59:00', '2025-05-31 10:59:00', 0);
 
 -- --------------------------------------------------------
 
@@ -120,7 +112,7 @@ CREATE TABLE `examinations` (
 --
 
 INSERT INTO `examinations` (`ExamID`, `SchoolYearStart`, `SchoolYearEnd`, `GradingPeriod`, `Term`, `SubmissionStart`, `SubmissionEnd`, `ExamStatus`) VALUES
-('EXAM1', '2025', '2026', 'PRELIM', 1, '2025-05-31', '2025-06-01', 1);
+('EXAM1', '2025', '2026', 'PRELIM', 1, '2025-05-31', '2025-06-07', 1);
 
 -- --------------------------------------------------------
 
@@ -148,7 +140,8 @@ INSERT INTO `logs` (`LogID`, `UserID`, `LogType`, `Description`, `date`) VALUES
 ('LOG5', '02000286986', 'LOGIN', 'Has logged in on mobile app', '2025-05-31 08:11:00'),
 ('LOG6', '02000286986', 'LOGIN', 'Has logged in on mobile app', '2025-05-31 08:13:00'),
 ('LOG7', '02000286986', 'LOGIN', 'Has logged in on mobile app', '2025-05-31 10:14:00'),
-('LOG8', '02000286986', 'LOGIN', 'Has logged in on mobile app', '2025-05-31 11:00:00');
+('LOG8', '02000286986', 'LOGIN', 'Has logged in on mobile app', '2025-05-31 11:00:00'),
+('LOG9', '297700', 'LOGIN', 'Has logged in on mobile app', '2025-06-06 07:40:00');
 
 -- --------------------------------------------------------
 
@@ -176,6 +169,31 @@ INSERT INTO `notifications` (`NotificationID`, `UserID`, `Title`, `Message`, `da
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `programcourses`
+--
+
+CREATE TABLE `programcourses` (
+  `ProgramID` varchar(50) NOT NULL,
+  `CourseID` varchar(50) NOT NULL,
+  `Status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `programcourses`
+--
+
+INSERT INTO `programcourses` (`ProgramID`, `CourseID`, `Status`) VALUES
+('BSIT3A', 'GE1904', 1),
+('BSIT3A', 'IT1914', 1),
+('BSIT3A', 'IT1915', 1),
+('BSIT3A', 'IT1918', 1),
+('BSIT3A', 'IT2034', 1),
+('BSIT3A', 'IT2301', 1),
+('BSIT3A', 'IT2409', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `programs`
 --
 
@@ -190,38 +208,6 @@ CREATE TABLE `programs` (
 
 INSERT INTO `programs` (`ProgramID`, `UserID`) VALUES
 ('BSIT3A', 'PROGHEAD1');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `studentcourses`
---
-
-CREATE TABLE `studentcourses` (
-  `CourseID` varchar(50) NOT NULL,
-  `UserID` varchar(50) NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `studentcourses`
---
-
-INSERT INTO `studentcourses` (`CourseID`, `UserID`, `Status`) VALUES
-('GE1904', '02000286986', 1),
-('GE1904', '297700', 1),
-('IT1914', '02000286986', 1),
-('IT1914', '297700', 1),
-('IT1915', '02000286986', 1),
-('IT1915', '297700', 1),
-('IT1918', '02000286986', 1),
-('IT1918', '297700', 1),
-('IT2034', '02000286986', 1),
-('IT2034', '297700', 1),
-('IT2301', '02000286986', 1),
-('IT2301', '297700', 1),
-('IT2409', '02000286986', 1),
-('IT2409', '297700', 1);
 
 -- --------------------------------------------------------
 
@@ -267,7 +253,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`UserID`, `FirstName`, `LastName`, `MiddleName`, `Email`, `Password`, `Role`, `Status`, `LogCount`) VALUES
 ('02000286986', 'Adrianne', 'Villa', 'Lapada', 'villa.286986@balagtas.sti.edu.ph', '$2y$10$qYz2vDGjlo5Axct1c9npie78sxTSe8LLG9thkYtRVxUqfdnT.95mS', 'Student', 1, 13),
-('297700', 'Jose Crisanto', 'Calayag', 'Buensuceso', 'calayag.297700@balagtas.sti.edu.ph', '$2y$10$Mook6nuGdxxK0UHEugzHtOLq.KwQzBz7HwQS.NOCEMAkKbp.lnU8u', 'Student', 1, 20),
+('297700', 'Jose Crisanto', 'Calayag', 'Buensuceso', 'calayag.297700@balagtas.sti.edu.ph', '$2y$10$Mook6nuGdxxK0UHEugzHtOLq.KwQzBz7HwQS.NOCEMAkKbp.lnU8u', 'Student', 1, 21),
 ('PROGHEAD1', 'Regina', 'Mape', 'R.', '123sample@balagtas.sti.edu.ph', '$2y$10$qVO1xCkIgPRB9gpe0Jt44.DxRViItf/Hi6IoxaCJEi1DXE.QKLKjO', 'Academic Head', 1, 1);
 
 --
@@ -281,6 +267,13 @@ ALTER TABLE `applicationcourseexam`
   ADD PRIMARY KEY (`ApplicationID`,`CourseID`,`ExamID`),
   ADD KEY `ApplicationCourseExam->Courses` (`CourseID`),
   ADD KEY `ApplicationCourseExam->Examinations` (`ExamID`);
+
+--
+-- Indexes for table `applicationimages`
+--
+ALTER TABLE `applicationimages`
+  ADD PRIMARY KEY (`ImageID`),
+  ADD KEY `ApplicationImages->Applications` (`ApplicationID`);
 
 --
 -- Indexes for table `applications`
@@ -317,18 +310,18 @@ ALTER TABLE `notifications`
   ADD KEY `Notifications->Users` (`UserID`);
 
 --
+-- Indexes for table `programcourses`
+--
+ALTER TABLE `programcourses`
+  ADD PRIMARY KEY (`ProgramID`,`CourseID`),
+  ADD KEY `ProgramCourses->Courses` (`CourseID`);
+
+--
 -- Indexes for table `programs`
 --
 ALTER TABLE `programs`
   ADD PRIMARY KEY (`ProgramID`),
   ADD KEY `Programs->Users` (`UserID`);
-
---
--- Indexes for table `studentcourses`
---
-ALTER TABLE `studentcourses`
-  ADD PRIMARY KEY (`CourseID`,`UserID`),
-  ADD KEY `StudentCourses->Users` (`UserID`);
 
 --
 -- Indexes for table `studentprograms`
@@ -348,6 +341,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `applicationimages`
+--
+ALTER TABLE `applicationimages`
+  MODIFY `ImageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
@@ -364,6 +363,12 @@ ALTER TABLE `applicationcourseexam`
   ADD CONSTRAINT `ApplicationCourseExam->Applications` FOREIGN KEY (`ApplicationID`) REFERENCES `applications` (`ApplicationID`),
   ADD CONSTRAINT `ApplicationCourseExam->Courses` FOREIGN KEY (`CourseID`) REFERENCES `courses` (`CourseID`),
   ADD CONSTRAINT `ApplicationCourseExam->Examinations` FOREIGN KEY (`ExamID`) REFERENCES `examinations` (`ExamID`);
+
+--
+-- Constraints for table `applicationimages`
+--
+ALTER TABLE `applicationimages`
+  ADD CONSTRAINT `ApplicationImages->Applications` FOREIGN KEY (`ApplicationID`) REFERENCES `applications` (`ApplicationID`);
 
 --
 -- Constraints for table `applications`
@@ -385,17 +390,17 @@ ALTER TABLE `notifications`
   ADD CONSTRAINT `Notifications->Users` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`);
 
 --
+-- Constraints for table `programcourses`
+--
+ALTER TABLE `programcourses`
+  ADD CONSTRAINT `ProgramCourses->Courses` FOREIGN KEY (`CourseID`) REFERENCES `courses` (`CourseID`),
+  ADD CONSTRAINT `ProgramCourses->Programs` FOREIGN KEY (`ProgramID`) REFERENCES `programs` (`ProgramID`);
+
+--
 -- Constraints for table `programs`
 --
 ALTER TABLE `programs`
   ADD CONSTRAINT `Programs->Users` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`);
-
---
--- Constraints for table `studentcourses`
---
-ALTER TABLE `studentcourses`
-  ADD CONSTRAINT `StudentCourses->Courses` FOREIGN KEY (`CourseID`) REFERENCES `courses` (`CourseID`),
-  ADD CONSTRAINT `StudentCourses->Users` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`);
 
 --
 -- Constraints for table `studentprograms`

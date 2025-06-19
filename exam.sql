@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2025 at 03:16 AM
+-- Generation Time: Jun 19, 2025 at 03:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,6 +36,22 @@ CREATE TABLE `applicationcourseexam` (
   `CourseExamStatus` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `applicationcourseexam`
+--
+
+INSERT INTO `applicationcourseexam` (`ApplicationID`, `CourseID`, `ExamID`, `Room`, `ExamDate`, `CourseExamStatus`) VALUES
+('APPLICATION1', 'GE1904', 'EXAM1', '', '2025-06-10', 2),
+('APPLICATION1', 'IT1918', 'EXAM1', '', '2025-06-10', 2),
+('APPLICATION1', 'IT2034', 'EXAM1', '', '2025-06-10', 2),
+('APPLICATION2', 'GE1904', 'EXAM1', '', NULL, 1),
+('APPLICATION2', 'IT2034', 'EXAM1', '', NULL, 1),
+('APPLICATION2', 'IT2301', 'EXAM1', '', NULL, 1),
+('APPLICATION3', 'IT1914', 'EXAM1', '', NULL, 1),
+('APPLICATION3', 'IT2409', 'EXAM1', '', NULL, 1),
+('APPLICATION4', 'GE1904', 'EXAM2', '', '2025-06-20', 2),
+('APPLICATION4', 'IT1918', 'EXAM2', '', '2025-06-20', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +63,15 @@ CREATE TABLE `applicationimages` (
   `ApplicationID` varchar(50) NOT NULL,
   `ImageName` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `applicationimages`
+--
+
+INSERT INTO `applicationimages` (`ImageID`, `ApplicationID`, `ImageName`) VALUES
+(4, 'APPLICATION1', '6844479ec9160-1000000034.jpg'),
+(5, 'APPLICATION3', '6845870c62f26-1000000034.jpg'),
+(6, 'APPLICATION4', '684d4d5c996f4-1000000035.png');
 
 -- --------------------------------------------------------
 
@@ -65,6 +90,16 @@ CREATE TABLE `applications` (
   `VerdictDate` datetime DEFAULT NULL,
   `ApplicationStatus` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `applications`
+--
+
+INSERT INTO `applications` (`ApplicationID`, `UserID`, `ProgramID`, `ReasonType`, `Reason`, `PaymentType`, `ApplicationDate`, `VerdictDate`, `ApplicationStatus`) VALUES
+('APPLICATION1', '256895', 'BSIT3A', 'Medical', 'Allergy', 'excuse', '2025-06-07 22:07:00', '2025-06-07 22:09:00', 2),
+('APPLICATION2', '297700', 'BSIT3A', 'Medical', 'dsaddsa', NULL, '2025-06-08 20:48:00', NULL, 1),
+('APPLICATION3', '297700', 'BSIT3A', 'Medical', 'sadsad\n', NULL, '2025-06-08 20:50:00', NULL, 1),
+('APPLICATION4', '297700', 'BSIT3A', 'Medical', 'dsadsad', 'payment', '2025-06-14 18:22:00', '2025-06-14 18:23:00', 2);
 
 -- --------------------------------------------------------
 
@@ -112,7 +147,8 @@ CREATE TABLE `examinations` (
 --
 
 INSERT INTO `examinations` (`ExamID`, `SchoolYearStart`, `SchoolYearEnd`, `GradingPeriod`, `Term`, `SubmissionStart`, `SubmissionEnd`, `ExamStatus`) VALUES
-('EXAM1', '2025', '2026', 'PRELIM', 1, '2025-05-31', '2025-06-07', 1);
+('EXAM1', '2025', '2026', 'PRELIM', 1, '2025-06-07', '2025-06-09', 0),
+('EXAM2', '2025', '2026', 'MIDTERM', 1, '2025-06-14', '2025-06-19', 1);
 
 -- --------------------------------------------------------
 
@@ -134,6 +170,11 @@ CREATE TABLE `logs` (
 
 INSERT INTO `logs` (`LogID`, `UserID`, `LogType`, `Description`, `date`) VALUES
 ('LOG1', '02000286986', 'LOGIN', 'Has logged in on mobile app', '2025-05-31 07:20:00'),
+('LOG10', '256895', 'LOGIN', 'Has logged in on mobile app', '2025-06-07 22:00:00'),
+('LOG11', '256895', 'LOGIN', 'Has logged in on mobile app', '2025-06-07 22:01:00'),
+('LOG12', '256895', 'LOGIN', 'Has logged in on mobile app', '2025-06-07 22:02:00'),
+('LOG13', '297700', 'LOGIN', 'Has logged in on mobile app', '2025-06-07 22:12:00'),
+('LOG14', '297700', 'LOGIN', 'Has logged in on mobile app', '2025-06-14 18:21:00'),
 ('LOG2', '02000286986', 'LOGIN', 'Has logged in on mobile app', '2025-05-31 07:36:00'),
 ('LOG3', '02000286986', 'LOGIN', 'Has logged in on mobile app', '2025-05-31 07:36:00'),
 ('LOG4', '02000286986', 'LOGIN', 'Has logged in on mobile app', '2025-05-31 07:38:00'),
@@ -162,9 +203,8 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`NotificationID`, `UserID`, `Title`, `Message`, `date`) VALUES
-(5, '02000286986', 'APPLICATION1 result', 'APPLICATION1 has been Approved', '2025-05-31'),
-(6, '02000286986', 'APPLICATION2 result', 'APPLICATION2 has been Approved', '2025-05-31'),
-(7, '02000286986', 'APPLICATION3 result', 'APPLICATION3 has been Declined', '2025-05-31');
+(8, '256895', 'APPLICATION1 result', 'APPLICATION1 has been Approved', '2025-06-07'),
+(9, '297700', 'APPLICATION4 result', 'APPLICATION4 has been Approved', '2025-06-14');
 
 -- --------------------------------------------------------
 
@@ -227,6 +267,7 @@ CREATE TABLE `studentprograms` (
 
 INSERT INTO `studentprograms` (`ProgramID`, `UserID`, `Status`) VALUES
 ('BSIT3A', '02000286986', 1),
+('BSIT3A', '256895', 1),
 ('BSIT3A', '297700', 1);
 
 -- --------------------------------------------------------
@@ -253,7 +294,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`UserID`, `FirstName`, `LastName`, `MiddleName`, `Email`, `Password`, `Role`, `Status`, `LogCount`) VALUES
 ('02000286986', 'Adrianne', 'Villa', 'Lapada', 'villa.286986@balagtas.sti.edu.ph', '$2y$10$qYz2vDGjlo5Axct1c9npie78sxTSe8LLG9thkYtRVxUqfdnT.95mS', 'Student', 1, 13),
-('297700', 'Jose Crisanto', 'Calayag', 'Buensuceso', 'calayag.297700@balagtas.sti.edu.ph', '$2y$10$Mook6nuGdxxK0UHEugzHtOLq.KwQzBz7HwQS.NOCEMAkKbp.lnU8u', 'Student', 1, 21),
+('256895', 'Mari Nicole', 'Relos', 'Medel', 'medel.256895@balagtas.sti.edu.ph', '$2y$10$da2hk/tC8b/TmaJY0jXRyOK9FXdRY85HGOxSrnhXgvVgbHgGSmGiW', 'Student', 1, 1),
+('297700', 'Jose Crisanto', 'Calayag', 'Buensuceso', 'calayag.297700@balagtas.sti.edu.ph', '$2y$10$Mook6nuGdxxK0UHEugzHtOLq.KwQzBz7HwQS.NOCEMAkKbp.lnU8u', 'Student', 1, 23),
 ('PROGHEAD1', 'Regina', 'Mape', 'R.', '123sample@balagtas.sti.edu.ph', '$2y$10$qVO1xCkIgPRB9gpe0Jt44.DxRViItf/Hi6IoxaCJEi1DXE.QKLKjO', 'Academic Head', 1, 1);
 
 --
@@ -344,13 +386,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `applicationimages`
 --
 ALTER TABLE `applicationimages`
-  MODIFY `ImageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ImageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `NotificationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `NotificationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

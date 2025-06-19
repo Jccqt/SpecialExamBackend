@@ -6,13 +6,13 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-$studentID = $_POST['studentID'];
-$firstName = $_POST['firstName'];
-$middleName = $_POST['middleName'];
-$lastName = $_POST['lastName'];
-$schoolEmail = $_POST['schoolEmail'];
-$userPassword = $_POST['userPassword'];
-$program = $_POST['program'];
+$studentID = '12345';
+$firstName = 'Reb';
+$middleName = 'Calayag';
+$lastName = 'Cruz';
+$schoolEmail = 'reb123@balagtas.sti.edu.ph';
+$userPassword = 'rebpogi';
+$program = 'BSIT3A';
 $studentPassword = password_hash($userPassword, PASSWORD_DEFAULT);
 $userRole = "Student";
 $status = 1;
@@ -33,7 +33,6 @@ try{
 
     $stmt->close();
     $prog_stmt->close();
-    $conn->commit();
     echo json_encode(['success' => true,
                     'message' => 'User added successfully!']);
 } catch (Exception $e){
